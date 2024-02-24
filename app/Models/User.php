@@ -42,4 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // A user can write many reviews
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }
