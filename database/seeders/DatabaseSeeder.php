@@ -3,7 +3,12 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use Database\Factories\ContentFactory;
 use Illuminate\Database\Seeder;
+
+use App\Models\Content;
+use App\Models\Review;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,11 +17,34 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
+        Content::factory(33)->create()->each(function ($content) {
+            $numReviews = random_int(5, 30);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+            Review::factory()
+                ->count($numReviews)
+                ->good()
+                ->for($content)
+                ->create();
+        });
+
+        Content::factory(33)->create()->each(function ($content) {
+            $numReviews = random_int(5, 30);
+
+            Review::factory()
+                ->count($numReviews)
+                ->average()
+                ->for($content)
+                ->create();
+        });
+
+        Content::factory(34)->create()->each(function ($content) {
+            $numReviews = random_int(5, 30);
+
+            Review::factory()
+                ->count($numReviews)
+                ->bad()
+                ->for($content)
+                ->create();
+        });
     }
 }
